@@ -29,7 +29,36 @@
                 fetchRes.then(res =>
                     res.json()).then(d => {
                         console.log(d)
-                        document.getElementById("p_res").innerHTML = d;
+                        document.getElementById("p_res").innerHTML = d.cipher;
+                    })
+            });
+
+
+
+            document.getElementById("btn_dec").addEventListener("click", (event) => {
+                req = {
+                    "ciphertext": document.getElementById("inp_text").value,
+
+                }
+                // Options to be given as parameter 
+                // in fetch for making requests
+                // other then GET
+                let options = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type':
+                            'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify(req)
+                }
+                // Fake api for making post requests
+                let fetchRes = fetch(
+                    "https://uvicorn-appmain-production-16f1.up.railway.app/decrypt",
+                    options);
+                fetchRes.then(res =>
+                    res.json()).then(d => {
+                        console.log(d)
+                        document.getElementById("p_res").innerHTML = d.plain;
                     })
             });
         };
@@ -43,7 +72,7 @@
         <form onsubmit="event.preventDefault();">
             <input type="text" id="inp_text" />
             <button id="btn_enc">Encrypt</button>
-            <button onclick="">Decryt</button>
+            <button id="btn_dec">Decryt</button>
         </form>
         <p id="p_res">Result is : </p>
     </div>
