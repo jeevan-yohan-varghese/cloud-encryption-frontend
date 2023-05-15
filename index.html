@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Cloud Encryption</title>
+    <script>
+        window.onload = (event) => {
+
+            document.getElementById("btn_enc").addEventListener("click", (event) => {
+                req = {
+                    "plain": document.getElementById("inp_text"),
+
+                }
+                // Options to be given as parameter 
+                // in fetch for making requests
+                // other then GET
+                let options = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type':
+                            'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify(req)
+                }
+                // Fake api for making post requests
+                let fetchRes = fetch(
+                    "https://uvicorn-appmain-production-16f1.up.railway.app/encrypt",
+                    options);
+                fetchRes.then(res =>
+                    res.json()).then(d => {
+                        console.log(d)
+                        document.getElementById("p_res").innerHTML = d;
+                    })
+            });
+        };
+
+    </script>
+</head>
+
+<body>
+
+    <div>
+        <form onsubmit="event.preventDefault();">
+            <input type="text" id="inp_text" />
+            <button id="btn_enc">Encrypt</button>
+            <button onclick="">Decryt</button>
+        </form>
+        <p id="p_res">Result : </p>
+    </div>
+</body>
+
+</html>
